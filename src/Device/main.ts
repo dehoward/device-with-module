@@ -1,0 +1,2 @@
+require('./telemetry');
+require('./modules');

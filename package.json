@@ -1,0 +1,24 @@
+{
+    "name": "device-with-module",
+    "version": "1.0.0",
+    "description": "A device with a module",
+    "scripts": {
+        "build:compile": "tsc",
+        "postbuild": "cp package.json dist/package.json && cd dist && npm install --only=production",
+        "build": "npm run build:compile && npm run postbuild",
+        "module": "npm run ./dist/RandomDogModule/main.js",
+        "start": "node ./dist/main.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dehoward/device-with-module.git"
+    },
+    "dependencies": {
+        "@types/node": "^16.6.1",
+        "axios": "^0.21.1",
+        "azure-iot-device": "^1.7.1",
+        "azure-iot-device-mqtt": "^1.7.1",
+        "chalk": "^2.4.1",
+        "fkill": "^7.2.1"
+    }
+}
