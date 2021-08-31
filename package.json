@@ -19,6 +19,7 @@
         "azure-iot-device": "^1.7.1",
         "azure-iot-device-mqtt": "^1.7.1",
         "chalk": "^2.4.1",
-        "fkill": "^7.2.1"
+        "fkill": "^7.2.1",
+        "path": "^0.12.7"
     }
 }

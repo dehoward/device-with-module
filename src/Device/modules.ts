@@ -1,10 +1,11 @@
 import * as cp from 'child_process';
 import chalk from 'chalk';
+import * as path from 'path';
 import { DeviceClient } from "./config";
 
 const moduleProcessMap: Record<string, cp.ChildProcess> = {};
 const ModuleMap = {
-    RandomDogModule: '../../dist/RandomDogModule/main.js'
+    RandomDogModule: path.resolve(process.cwd(), 'dist', 'RandomDogModule/main.js')
 }
 
 DeviceClient.onDeviceMethod('StartModule', ({ payload: module }, response) => {
@@ -18,12 +19,12 @@ DeviceClient.onDeviceMethod('StartModule', ({ payload: module }, response) => {
     }
 
     // start module:
-    moduleProcessMap[module] = cp.exec(`node ${modulePath}`, (err, stdout) => console.log(err?.message ? chalk.red(err.message) : chalk.bold(chalk.greenBright(`Module says: ${stdout}`))));
+    moduleProcessMap[module] = cp.exec(`node ${modulePath}`);
     moduleProcessMap[module].stdout?.on('data', (data) => {
         console.log(`Module ${chalk.italic(`'${module}'`)} says: ${chalk.cyanBright(data)}`);
     });
 
-    response.send(200, 'Started module!!!', err => console.log(err?.message ? chalk.red(err.message) : chalk.bold(chalk.greenBright('Successfully started module!'))));
+    response.send(200, 'Started module!!!', logMessage('Successfully started module!'));
 });
 
 DeviceClient.onDeviceMethod('StopModule', async ({ payload: module }, response) => {
@@ -36,5 +37,11 @@ DeviceClient.onDeviceMethod('StopModule', async ({ payload: module }, response) 
         return;
     }
 
-    response.send(200, 'Stopped module!!!', err => console.log(err?.message ? chalk.red(err.message) : chalk.bold(chalk.greenBright('Successfully stopped module!'))));
+    moduleProcessMap[module].kill();
+
+    response.send(200, 'Stopped module!!!', logMessage('Successfully stopped module!'))
 });
+
+function logMessage(msg: string) {
+    return (err: any) => console.log(err?.message ? chalk.red(err.message) : chalk.bold(chalk.greenBright(msg)));
+}

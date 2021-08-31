@@ -38,3 +38,6 @@
      {
          "breed": "hound"
      }
+
+## Open Issues
+1. The `StopModule` command doesn't actually stop the child process
