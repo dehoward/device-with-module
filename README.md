@@ -1,6 +1,5 @@
 # A device with a module
 
-[[__TOC__]]
 ## Quickstart
 1. **Get a connection string to your IoT Hub** and add it to `src/Device/config.ts`.
    
@@ -16,25 +15,25 @@
   - `SetTelemetryInterval`
     
     payload:
-    ```json
+    ```json5
     {
         "interval": 10000 // set the interval to 10s
     }
   - `StartModule`
 
     payload:
-    ```json
+    ```json5
     "RandomDogModule"
   - `StopModule`
 
     payload:
-    ```json
+    ```json5
     "RandomDogModule"
 - ### RandomDogModule:
   - `GetRandomDog`
 
     (optional) payload:
-     ```json
+     ```json5
      {
          "breed": "hound"
      }
